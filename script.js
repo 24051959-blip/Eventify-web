@@ -17,7 +17,7 @@ let cat = "All", term = "", current = null;
 const load = () => { try { return JSON.parse(localStorage.getItem(KEY)) || []; } catch { return []; } };
 const save = v => { try { localStorage.setItem(KEY, JSON.stringify(v)); } catch {} };
 const fmt = d => new Date(d).toLocaleString("en-IN",{weekday:"short",day:"numeric",month:"short",hour:"numeric",minute:"2-digit"});
-const art = e => `<div class="art" style="background:linear-gradient(135deg,${e.c[0]},${e.c[1]})"><img src="${e.img}" alt="${e.name} illustration" loading="lazy" onerror="this.remove()"><em>${e.cat}</em>${e.feat?'<em class="star">★ Featured</em>':''}</div>`;
+const art = e => `<div class="art" style="background:linear-gradient(135deg,${e.c[0]},${e.c[1]})"><span class="fb">${e.icon}</span><img src="${e.img}" alt="${e.name} illustration" loading="lazy" onerror="this.remove()"><em>${e.cat}</em>${e.feat?'<em class="star">★ Featured</em>':''}</div>`;
 const upcoming = () => EVENTS.filter(e => new Date(e.date) > new Date()).sort((a,b) => new Date(a.date)-new Date(b.date));
 
 // ---------- Event grid ----------
@@ -25,7 +25,7 @@ function renderChips(){
   const cats = ["All",...new Set(EVENTS.map(e => e.cat))];
   $("#chips").innerHTML = cats.map(c => `<button class="chip" aria-pressed="${c===cat}" data-c="${c}">${c}</button>`).join("");
 }
-function cardHTML(e){return `<button class="card" data-id="${e.id}">${art(e)}<div class="body"><span class="meta">🗓 ${fmt(e.date)}</span><span class="cd" data-d="${e.date}"></span><h3>${e.name}</h3><p class="venue">📍 ${e.venue}</p><p>${e.desc}</p></div></button>`;}
+function cardHTML(e){return `<button class="card" data-id="${e.id}">${art(e)}<div class="body"><span class="meta">📅 ${fmt(e.date)}</span><span class="cd" data-d="${e.date}"></span><h3>${e.name}</h3><p class="venue">📍 ${e.venue}</p><p>${e.desc}</p></div></button>`;}
 function renderFeatured(){$("#fgrid").innerHTML = upcoming().filter(e => e.feat).slice(0,3).map(cardHTML).join("");}
 function cardTimers(){document.querySelectorAll(".cd").forEach(el=>{let s=Math.max(0,Math.floor((new Date(el.dataset.d)-new Date())/1000));const d=Math.floor(s/86400),h=Math.floor(s%86400/3600),m=Math.floor(s%3600/60);el.textContent="⏳ Starts in "+(d?d+"d ":"")+h+"h "+m+"m";});}
 function renderGrid(){
@@ -54,7 +54,7 @@ tick(); setInterval(tick,1000);
 const modal = $("#modal"), form = $("#form");
 function openEvent(id){
   current = EVENTS.find(e => e.id===id);
-  $("#detail").innerHTML = `${art(current)}<div class="body"><h2>${current.name}</h2><ul><li>🗓 ${fmt(current.date)}</li><li>📍 ${current.venue}</li></ul><p>${current.long}</p></div>`;
+  $("#detail").innerHTML = `${art(current)}<div class="body"><h2>${current.name}</h2><ul><li>📅 ${fmt(current.date)}</li><li>📍 ${current.venue}</li></ul><p>${current.long}</p></div>`;
   form.elements.event.innerHTML = upcoming().map(e => `<option value="${e.id}" ${e.id===id?"selected":""}>${e.name}</option>`).join("");
   form.reset(); form.elements.event.value = id; clearErrors();
   form.hidden = false; $("#done").hidden = true;

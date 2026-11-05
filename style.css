@@ -73,3 +73,5 @@ small{color:var(--err);min-height:1em;font-weight:500}
 .clock small{color:inherit}
 
 .venue{font-weight:500;color:var(--ink)!important}
+
+.art .fb{font-size:3.8rem}
