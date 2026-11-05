@@ -25,9 +25,9 @@ function renderChips(){
   const cats = ["All",...new Set(EVENTS.map(e => e.cat))];
   $("#chips").innerHTML = cats.map(c => `<button class="chip" aria-pressed="${c===cat}" data-c="${c}">${c}</button>`).join("");
 }
-function cardHTML(e){return `<button class="card" data-id="${e.id}">${art(e)}<div class="body"><span class="meta">${fmt(e.date)}</span><span class="cd" data-d="${e.date}"></span><h3>${e.name}</h3><p class="venue">${e.venue}</p><p>${e.desc}</p></div></button>`;}
+function cardHTML(e){return `<button class="card" data-id="${e.id}">${art(e)}<div class="body"><span class="meta">🗓 ${fmt(e.date)}</span><span class="cd" data-d="${e.date}"></span><h3>${e.name}</h3><p class="venue">📍 ${e.venue}</p><p>${e.desc}</p></div></button>`;}
 function renderFeatured(){$("#fgrid").innerHTML = upcoming().filter(e => e.feat).slice(0,3).map(cardHTML).join("");}
-function cardTimers(){document.querySelectorAll(".cd").forEach(el=>{let s=Math.max(0,Math.floor((new Date(el.dataset.d)-new Date())/1000));const d=Math.floor(s/86400),h=Math.floor(s%86400/3600),m=Math.floor(s%3600/60);el.textContent="Starts in "+(d?d+"d ":"")+h+"h "+m+"m";});}
+function cardTimers(){document.querySelectorAll(".cd").forEach(el=>{let s=Math.max(0,Math.floor((new Date(el.dataset.d)-new Date())/1000));const d=Math.floor(s/86400),h=Math.floor(s%86400/3600),m=Math.floor(s%3600/60);el.textContent="⏳ Starts in "+(d?d+"d ":"")+h+"h "+m+"m";});}
 function renderGrid(){
   const list = upcoming().filter(e => (cat==="All"||e.cat===cat) && (e.name+e.venue+e.desc+e.cat).toLowerCase().includes(term));
   $("#grid").innerHTML = list.map(cardHTML).join(""); cardTimers();
@@ -54,7 +54,7 @@ tick(); setInterval(tick,1000);
 const modal = $("#modal"), form = $("#form");
 function openEvent(id){
   current = EVENTS.find(e => e.id===id);
-  $("#detail").innerHTML = `${art(current)}<div class="body"><h2>${current.name}</h2><ul><li>${fmt(current.date)}</li><li>${current.venue}</li></ul><p>${current.long}</p></div>`;
+  $("#detail").innerHTML = `${art(current)}<div class="body"><h2>${current.name}</h2><ul><li>🗓 ${fmt(current.date)}</li><li>📍 ${current.venue}</li></ul><p>${current.long}</p></div>`;
   form.elements.event.innerHTML = upcoming().map(e => `<option value="${e.id}" ${e.id===id?"selected":""}>${e.name}</option>`).join("");
   form.reset(); form.elements.event.value = id; clearErrors();
   form.hidden = false; $("#done").hidden = true;
