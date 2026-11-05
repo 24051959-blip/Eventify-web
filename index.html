@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Eventify – Discover and join campus events</title>
+<meta name="description" content="Browse upcoming workshops, hackathons, concerts and talks, then register in a minute.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@600;800&family=Figtree:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<header class="nav">
+  <a class="logo" href="#top">eventify<span>.</span></a>
+  <nav aria-label="Main">
+    <a href="#featured">Featured</a>
+    <a href="#events">All events</a>
+    <a href="#mine">My registrations <b id="count">0</b></a>
+  </nav>
+  <button id="theme" class="icon" aria-label="Toggle dark mode">◐</button>
+</header>
+
+<main id="top">
+  <section class="hero">
+    <div class="hero-text">
+      <h1>Find the next thing worth showing up for.</h1>
+      <p>Workshops, hackathons, concerts and talks happening on and around campus. Pick one, register in under a minute.</p>
+      <a class="btn" href="#events">Browse events</a>
+    </div>
+    <aside class="next" aria-live="polite">
+      <p class="muted">Happening next</p>
+      <h2 id="nextName"></h2>
+      <p id="nextMeta" class="muted"></p>
+      <div class="clock" id="clock"></div>
+      <button class="btn ghost" id="nextBtn">View details</button>
+    </aside>
+  </section>
+
+  <section id="featured" class="wrap">
+    <h2>Featured events</h2>
+    <div id="fgrid" class="grid"></div>
+  </section>
+
+  <section id="events" class="wrap">
+    <div class="bar">
+      <h2>Upcoming events</h2>
+      <input id="search" type="search" placeholder="Search by name, venue or topic" aria-label="Search events">
+    </div>
+    <div id="chips" class="chips" role="group" aria-label="Filter by category"></div>
+    <div id="grid" class="grid"></div>
+    <p id="empty" class="empty" hidden>No events match that search. Try a different word or choose “All”.</p>
+  </section>
+
+  <section id="mine" class="wrap">
+    <h2>My registrations</h2>
+    <ul id="regs" class="regs"></ul>
+  </section>
+</main>
+
+<footer>Built with HTML, CSS and JavaScript · Registrations are saved in your browser only.</footer>
+
+<dialog id="modal">
+  <button class="icon close" id="close" aria-label="Close">✕</button>
+  <div id="detail"></div>
+  <form id="form" novalidate>
+    <h3>Register</h3>
+    <label>Full name<input name="name" autocomplete="name"><small></small></label>
+    <label>Email<input name="email" type="email" autocomplete="email"><small></small></label>
+    <label>Phone<input name="phone" type="tel" autocomplete="tel" placeholder="10-digit number"><small></small></label>
+    <label>Event<select name="event"></select><small></small></label>
+    <button class="btn" type="submit">Register for this event</button>
+  </form>
+  <div id="done" hidden></div>
+</dialog>
+<script src="script.js"></script>
+</body>
+</html>
