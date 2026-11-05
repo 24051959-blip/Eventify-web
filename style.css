@@ -75,3 +75,6 @@ small{color:var(--err);min-height:1em;font-weight:500}
 .venue{font-weight:500;color:var(--ink)!important}
 
 .art .fb{font-size:3.8rem}
+#detail .art em.star{right:4rem}
+dialog{margin:auto}
+#detail ul{padding:0}
