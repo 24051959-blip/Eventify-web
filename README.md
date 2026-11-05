@@ -3,7 +3,7 @@
 A modern, responsive event management website where users can explore upcoming events, view details and register. Built with **HTML5, CSS3 and vanilla JavaScript** (no frameworks).
 
 - **Live website:** https://24051959-blip.github.io/Eventify-web/
-- **Author:** _your name_
+- **Author:** SHIVANSH NAYAK
 - **GitHub repository:** https://github.com/24051959-blip/Eventify-web
 ## Features
 
