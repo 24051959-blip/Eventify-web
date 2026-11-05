@@ -22,10 +22,11 @@ const upcoming = () => EVENTS.filter(e => new Date(e.date) > new Date()).sort((a
 
 // ---------- Event grid ----------
 function renderChips(){
+  const em = {All:"✨",Tech:"💻",Workshop:"🛠️",Music:"🎵",Talks:"🎤",Competition:"🏆"};
   const cats = ["All",...new Set(EVENTS.map(e => e.cat))];
-  $("#chips").innerHTML = cats.map(c => `<button class="chip" aria-pressed="${c===cat}" data-c="${c}">${c}</button>`).join("");
+  $("#chips").innerHTML = cats.map(c => `<button class="chip" aria-pressed="${c===cat}" data-c="${c}">${em[c]||""} ${c}</button>`).join("");
 }
-function cardHTML(e){return `<button class="card" data-id="${e.id}">${art(e)}<div class="body"><span class="meta">📅 ${fmt(e.date)}</span><span class="cd" data-d="${e.date}"></span><h3>${e.name}</h3><p class="venue">📍 ${e.venue}</p><p>${e.desc}</p></div></button>`;}
+function cardHTML(e){return `<button class="card" data-id="${e.id}" style="--c:${e.c[0]}">${art(e)}<div class="body"><span class="meta">📅 ${fmt(e.date)}</span><span class="cd" data-d="${e.date}"></span><h3>${e.name}</h3><p class="venue">📍 ${e.venue}</p><p>${e.desc}</p></div></button>`;}
 function renderFeatured(){$("#fgrid").innerHTML = upcoming().filter(e => e.feat).slice(0,3).map(cardHTML).join("");}
 function cardTimers(){document.querySelectorAll(".cd").forEach(el=>{let s=Math.max(0,Math.floor((new Date(el.dataset.d)-new Date())/1000));const d=Math.floor(s/86400),h=Math.floor(s%86400/3600),m=Math.floor(s%3600/60);el.textContent="⏳ Starts in "+(d?d+"d ":"")+h+"h "+m+"m";});}
 function renderGrid(){

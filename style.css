@@ -78,3 +78,18 @@ small{color:var(--err);min-height:1em;font-weight:500}
 #detail .art em.star{right:4rem}
 dialog{margin:auto}
 #detail ul{padding:0}
+
+main{background:radial-gradient(circle at 8% 4%,color-mix(in srgb,var(--brand) 18%,transparent),transparent 38%),radial-gradient(circle at 96% 18%,color-mix(in srgb,var(--pop) 28%,transparent),transparent 34%)}
+.hero{position:relative}
+.sticker{position:absolute;font-size:2.4rem;animation:float 5s ease-in-out infinite;pointer-events:none}
+.s1{left:46%;top:8%}.s2{left:3%;bottom:4%;animation-delay:1s}.s3{left:50%;bottom:6%;animation-delay:2s}
+@keyframes float{50%{transform:translateY(-12px) rotate(8deg)}}
+.art{height:175px}
+.art img,.art .fb{transition:transform .5s}
+.card:hover .art img{transform:scale(1.1)}
+.card{border-top:5px solid var(--c,var(--brand))}
+.meta{background:color-mix(in srgb,var(--c,var(--brand)) 18%,transparent);color:var(--ink);padding:.15rem .7rem;border-radius:99px;justify-self:start}
+.chip:hover{border-color:var(--brand);transform:translateY(-2px)}
+.chip[aria-pressed=true]{background:var(--brand);border-color:var(--brand);color:#fff}
+:root[data-theme=dark] .chip[aria-pressed=true]{color:#10142a}
+@media(max-width:800px){.sticker{display:none}}
