@@ -4,7 +4,7 @@ A modern, responsive event management website where users can explore upcoming e
 
 - **Live website:** _paste your GitHub Pages / Netlify / Vercel link here_
 - **Author:** _your name_
-- **GitHub repository:** _paste your repository link here_
+- **GitHub repository:** https://github.com/24051959-blip/Eventify-web
 
 ## Features
 
