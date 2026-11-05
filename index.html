@@ -8,7 +8,90 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@600;800&family=Figtree:wght@400;500;600&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="style.css">
+<style>
+:root{--bg:#f6f7fb;--card:#fff;--ink:#16203a;--muted:#5d6682;--line:#dfe3ef;--brand:#4a3ee0;--pop:#ffc933;--err:#c4262e;--ok:#16794a;--r:18px}
+:root[data-theme=dark]{--bg:#10142a;--card:#181e3b;--ink:#eef0fb;--muted:#a3abc9;--line:#2a3157;--brand:#8f86ff;--err:#ff8087;--ok:#6fe0a8}
+*{box-sizing:border-box;margin:0}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--ink);font:16px/1.55 Figtree,system-ui,sans-serif;transition:background .3s,color .3s}
+h1,h2,h3,.logo{font-family:'Bricolage Grotesque',Figtree,sans-serif;line-height:1.1}
+a{color:inherit}
+.muted{color:var(--muted)}
+:focus-visible{outline:3px solid var(--brand);outline-offset:2px}
+.nav{position:sticky;top:0;z-index:5;display:flex;align-items:center;gap:1rem;padding:.8rem clamp(1rem,4vw,3rem);background:color-mix(in srgb,var(--bg) 88%,transparent);backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
+.logo{font-size:1.6rem;font-weight:800;text-decoration:none;margin-right:auto}.logo span{color:var(--brand)}
+.nav nav{display:flex;gap:1.2rem}.nav nav a{text-decoration:none;font-weight:500}.nav nav a:hover{color:var(--brand)}
+.nav b{background:var(--pop);color:#16203a;border-radius:99px;padding:0 .5rem;font-size:.8rem}
+.icon{background:none;border:1px solid var(--line);color:var(--ink);width:40px;height:40px;border-radius:50%;cursor:pointer;font-size:1.1rem;transition:transform .3s}
+.icon:hover{transform:rotate(180deg)}
+.btn{display:inline-block;background:var(--brand);color:#fff;border:0;border-radius:99px;padding:.8rem 1.5rem;font:600 1rem Figtree,system-ui,sans-serif;cursor:pointer;text-decoration:none;transition:transform .2s,box-shadow .2s}
+:root[data-theme=dark] .btn{color:#10142a}
+.btn:hover{transform:translateY(-2px);box-shadow:0 8px 20px -8px var(--brand)}
+.btn.ghost{background:none;border:2px solid var(--brand);color:var(--brand)}
+.hero{display:grid;grid-template-columns:1.3fr 1fr;gap:2.5rem;align-items:center;padding:clamp(2rem,7vw,6rem) clamp(1rem,4vw,3rem);max-width:1200px;margin:auto}
+.hero h1{font-size:clamp(2.4rem,6vw,4.6rem);font-weight:800;letter-spacing:-.03em;margin-bottom:1rem}
+.hero p{max-width:46ch;margin-bottom:1.6rem;color:var(--muted);font-size:1.1rem}
+.next{background:var(--ink);color:var(--bg);border-radius:var(--r);padding:1.6rem;display:grid;gap:.7rem;transform:rotate(1.5deg);animation:in .8s cubic-bezier(.2,.8,.2,1)}
+.next .muted{color:color-mix(in srgb,var(--bg) 65%,transparent)}
+.next h2{font-size:1.7rem}
+.next .btn.ghost{border-color:var(--pop);color:var(--pop);justify-self:start}
+.clock{display:flex;gap:.6rem}
+.clock div{background:color-mix(in srgb,var(--bg) 14%,transparent);border-radius:12px;padding:.5rem .3rem;min-width:62px;text-align:center;font:800 1.8rem 'Bricolage Grotesque',sans-serif}
+.clock small{display:block;font:400 .7rem Figtree,system-ui,sans-serif;opacity:.7}
+@keyframes in{from{opacity:0;transform:translateY(30px) rotate(5deg)}}
+.wrap{max-width:1200px;margin:auto;padding:2.5rem clamp(1rem,4vw,3rem)}
+.bar{display:flex;flex-wrap:wrap;gap:1rem;justify-content:space-between;align-items:center;margin-bottom:1rem}
+.bar h2,#mine h2{font-size:clamp(1.6rem,3vw,2.2rem)}
+input,select{font:inherit;color:var(--ink);background:var(--card);border:1.5px solid var(--line);border-radius:12px;padding:.7rem .9rem;width:100%}
+#search{max-width:340px;border-radius:99px}
+.chips{display:flex;flex-wrap:wrap;gap:.5rem;margin-bottom:1.5rem}
+.chip{border:1.5px solid var(--line);background:var(--card);color:var(--ink);border-radius:99px;padding:.4rem 1rem;cursor:pointer;font:500 .9rem Figtree,system-ui,sans-serif;transition:.2s}
+.chip[aria-pressed=true]{background:var(--ink);color:var(--bg);border-color:var(--ink)}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(270px,1fr));gap:1.4rem}
+.card{background:var(--card);border:1px solid var(--line);border-radius:var(--r);overflow:hidden;cursor:pointer;display:flex;flex-direction:column;text-align:left;color:inherit;font:inherit;padding:0;transition:transform .25s,box-shadow .25s}
+.card:hover{transform:translateY(-6px);box-shadow:0 18px 30px -18px rgba(20,30,80,.5)}
+.art{height:150px;display:grid;place-items:center;font-size:3.6rem;position:relative}
+.art img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.art em.star{left:auto;right:.8rem;background:var(--pop);color:#16203a}
+.cd{font-size:.8rem;color:var(--muted)}
+#featured{padding-bottom:0}#featured h2{font-size:clamp(1.6rem,3vw,2.2rem);margin-bottom:1rem}
+.art em{position:absolute;top:.8rem;left:.8rem;background:var(--card);color:var(--ink);font:600 .75rem Figtree,system-ui,sans-serif;font-style:normal;padding:.2rem .7rem;border-radius:99px}
+.body{padding:1.1rem 1.2rem 1.3rem;display:grid;gap:.4rem}
+.body h3{font-size:1.25rem}.body p{font-size:.92rem;color:var(--muted)}
+.meta{font-size:.85rem;font-weight:600;color:var(--brand)}
+.empty,.regs:empty+*{color:var(--muted)}
+.regs{list-style:none;display:grid;gap:.7rem;margin-top:1rem}
+.regs:empty::before{content:"Nothing yet. Register for an event and it will show up here.";color:var(--muted)}
+.regs li{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:.8rem 1.1rem;display:flex;justify-content:space-between;gap:1rem;align-items:center;flex-wrap:wrap}
+.regs button{background:none;border:0;color:var(--err);cursor:pointer;font:600 .9rem Figtree,system-ui,sans-serif}
+footer{text-align:center;padding:2rem 1rem;color:var(--muted);font-size:.9rem}
+dialog{border:0;border-radius:22px;padding:0;width:min(560px,94vw);max-height:92vh;background:var(--card);color:var(--ink);overflow:auto}
+dialog[open]{animation:pop .3s cubic-bezier(.2,.8,.2,1)}
+dialog::backdrop{background:rgba(10,14,35,.6);backdrop-filter:blur(3px)}
+@keyframes pop{from{opacity:0;transform:scale(.94) translateY(16px)}}
+.close{position:absolute;top:.8rem;right:.8rem;background:var(--card);z-index:2}
+#detail .art{height:190px}#detail .body{padding:1.2rem 1.5rem 0}
+#detail ul{list-style:none;display:grid;gap:.2rem;margin:.6rem 0;font-weight:500}
+form{padding:1rem 1.5rem 1.6rem;display:grid;gap:.8rem}
+label{display:grid;gap:.25rem;font-weight:600;font-size:.9rem}
+label input.bad,label select.bad{border-color:var(--err)}
+small{color:var(--err);min-height:1em;font-weight:500}
+#done{padding:2rem 1.5rem;text-align:center;display:grid;gap:.7rem;justify-items:center}
+#done[hidden]{display:none}
+#done .tick{width:64px;height:64px;border-radius:50%;background:var(--ok);color:#fff;display:grid;place-items:center;font-size:2rem;animation:pop .5s}
+@media(max-width:800px){.hero{grid-template-columns:1fr}.next{transform:none}.nav nav a:not(:last-child){display:none}}
+@media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important;scroll-behavior:auto}}
+.clock small{color:inherit}
+
+.venue{font-weight:500;color:var(--ink)!important}
+
+.art .fb{font-size:3.8rem}
+#detail .art em.star{right:4rem}
+dialog{margin:auto}
+#detail ul{padding:0}
+
+
+</style>
 </head>
 <body>
 <header class="nav">
@@ -23,7 +106,6 @@
 
 <main id="top">
   <section class="hero">
-    <span class="sticker s1" aria-hidden="true">🎶</span><span class="sticker s2" aria-hidden="true">💡</span><span class="sticker s3" aria-hidden="true">🏆</span>
     <div class="hero-text">
       <h1>Find the next thing worth showing up for.</h1>
       <p>Workshops, hackathons, concerts and talks happening on and around campus. Pick one, register in under a minute.</p>
@@ -39,13 +121,13 @@
   </section>
 
   <section id="featured" class="wrap">
-    <h2>⭐ Featured events</h2>
+    <h2>Featured events</h2>
     <div id="fgrid" class="grid"></div>
   </section>
 
   <section id="events" class="wrap">
     <div class="bar">
-      <h2>🎉 Upcoming events</h2>
+      <h2>Upcoming events</h2>
       <input id="search" type="search" placeholder="Search by name, venue or topic" aria-label="Search events">
     </div>
     <div id="chips" class="chips" role="group" aria-label="Filter by category"></div>
@@ -54,7 +136,7 @@
   </section>
 
   <section id="mine" class="wrap">
-    <h2>🎟️ My registrations</h2>
+    <h2>My registrations</h2>
     <ul id="regs" class="regs"></ul>
   </section>
 </main>
@@ -74,6 +156,112 @@
   </form>
   <div id="done" hidden></div>
 </dialog>
-<script src="script.js"></script>
+<script>
+// ---------- Data ----------
+const EVENTS = [
+  {id:1,img:"data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA4MDAgNDUwIj48ZGVmcz48bGluZWFyR3JhZGllbnQgaWQ9ImciIHgxPSIwIiB5MT0iMCIgeDI9IjEiIHkyPSIxIj48c3RvcCBvZmZzZXQ9IjAiIHN0b3AtY29sb3I9IiM0YTNlZTAiLz48c3RvcCBvZmZzZXQ9IjEiIHN0b3AtY29sb3I9IiM4Zjg2ZmYiLz48L2xpbmVhckdyYWRpZW50PjwvZGVmcz48cmVjdCB3aWR0aD0iODAwIiBoZWlnaHQ9IjQ1MCIgZmlsbD0idXJsKCNnKSIvPjxjaXJjbGUgY3g9IjEzNyIgY3k9IjI5MSIgcj0iNTYiIGZpbGw9IiNmZmYiIG9wYWNpdHk9IjAuMTAiLz48Y2lyY2xlIGN4PSI1MDciIGN5PSIzODkiIHI9IjE1NSIgZmlsbD0iI2ZmZiIgb3BhY2l0eT0iMC4xMyIvPjxjaXJjbGUgY3g9IjM4OCIgY3k9IjQwMyIgcj0iOTMiIGZpbGw9IiNmZmYiIG9wYWNpdHk9IjAuMDgiLz48Y2lyY2xlIGN4PSIyOSIgY3k9IjQyNyIgcj0iMTM5IiBmaWxsPSIjZmZmIiBvcGFjaXR5PSIwLjEzIi8+PGNpcmNsZSBjeD0iNzgwIiBjeT0iMzkyIiByPSI0MCIgZmlsbD0iI2ZmZiIgb3BhY2l0eT0iMC4xNiIvPjxjaXJjbGUgY3g9IjI3MiIgY3k9IjM2OSIgcj0iOTgiIGZpbGw9IiNmZmYiIG9wYWNpdHk9IjAuMTUiLz48Y2lyY2xlIGN4PSIxMDQiIGN5PSIxNjIiIHI9IjQ3IiBmaWxsPSIjZmZmIiBvcGFjaXR5PSIwLjA3Ii8+PHJlY3QgeD0iNjY1IiB5PSIyNzciIHdpZHRoPSI2MSIgaGVpZ2h0PSIyNiIgcng9IjEwIiBmaWxsPSIjZmZmIiBvcGFjaXR5PSIuMTgiIHRyYW5zZm9ybT0icm90YXRlKDE4IDQwMCAyMjUpIi8+PHJlY3QgeD0iMjIxIiB5PSIyMTYiIHdpZHRoPSIxNTIiIGhlaWdodD0iMTQiIHJ4PSIxMCIgZmlsbD0iI2ZmZiIgb3BhY2l0eT0iLjE4IiB0cmFuc2Zvcm09InJvdGF0ZSg4IDQwMCAyMjUpIi8+PHJlY3QgeD0iMjI3IiB5PSIyMjQiIHdpZHRoPSIxMjMiIGhlaWdodD0iMzEiIHJ4PSIxMCIgZmlsbD0iI2ZmZiIgb3BhY2l0eT0iLjE4IiB0cmFuc2Zvcm09InJvdGF0ZSgtMTEgNDAwIDIyNSkiLz48cmVjdCB4PSIzNTMiIHk9IjExOCIgd2lkdGg9IjE0NiIgaGVpZ2h0PSIyMSIgcng9IjEwIiBmaWxsPSIjZmZmIiBvcGFjaXR5PSIuMTgiIHRyYW5zZm9ybT0icm90YXRlKDIzIDQwMCAyMjUpIi8+PHJlY3QgeD0iNDcwIiB5PSIxNDgiIHdpZHRoPSI2MiIgaGVpZ2h0PSIyNyIgcng9IjEwIiBmaWxsPSIjZmZmIiBvcGFjaXR5PSIuMTgiIHRyYW5zZm9ybT0icm90YXRlKDEwIDQwMCAyMjUpIi8+PHRleHQgeD0iNDAwIiB5PSIyOTAiIGZvbnQtc2l6ZT0iMTkwIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIj7wn5K7PC90ZXh0Pjwvc3ZnPg==",feat:true,name:"CodeSprint 24h Hackathon",cat:"Tech",date:"2026-11-21T09:00",venue:"Innovation Lab, Block C",icon:"💻",c:["#4a3ee0","#8f86ff"],desc:"Team up, pick a problem and build a working prototype overnight.",long:"Teams of up to four choose a problem statement on the morning of the event, build through the night and present to a panel of mentors. Meals are provided and the top three teams win prizes."},
+  {id:2,img:"data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA4MDAgNDUwIj48ZGVmcz48bGluZWFyR3JhZGllbnQgaWQ9ImciIHgxPSIwIiB5MT0iMCIgeDI9IjEiIHkyPSIxIj48c3RvcCBvZmZzZXQ9IjAiIHN0b3AtY29sb3I9IiNmZjZiNmIiLz48c3RvcCBvZmZzZXQ9IjEiIHN0b3AtY29sb3I9IiNmZmM5MzMiLz48L2xpbmVhckdyYWRpZW50PjwvZGVmcz48cmVjdCB3aWR0aD0iODAwIiBoZWlnaHQ9IjQ1MCIgZmlsbD0idXJsKCNnKSIvPjxjaXJjbGUgY3g9IjU3IiBjeT0iNDYiIHI9IjYxIiBmaWxsPSIjZmZmIiBvcGFjaXR5PSIwLjEyIi8+PGNpcmNsZSBjeD0iMTczIiBjeT0iMzc2IiByPSIxMTgiIGZpbGw9IiNmZmYiIG9wYWNpdHk9IjAuMTAiLz48Y2lyY2xlIGN4PSIyMTciIGN5PSIzMTAiIHI9IjQ5IiBmaWxsPSIjZmZmIiBvcGFjaXR5PSIwLjE1Ii8+PGNpcmNsZSBjeD0iMTYyIiBjeT0iMjIwIiByPSIxNDAiIGZpbGw9IiNmZmYiIG9wYWNpdHk9IjAuMTciLz48Y2lyY2xlIGN4PSI1MjEiIGN5PSIxOTAiIHI9IjE1MyIgZmlsbD0iI2ZmZiIgb3BhY2l0eT0iMC4xNCIvPjxjaXJjbGUgY3g9IjM2IiBjeT0iNDQ1IiByPSI0NyIgZmlsbD0iI2ZmZiIgb3BhY2l0eT0iMC4xMiIvPjxjaXJjbGUgY3g9IjMyNiIgY3k9IjE5NCIgcj0iMTQ4IiBmaWxsPSIjZmZmIiBvcGFjaXR5PSIwLjE5Ii8+PHJlY3QgeD0iNTM4IiB5PSI4NCIgd2lkdGg9IjEzMSIgaGVpZ2h0PSIxOSIgcng9IjEwIiBmaWxsPSIjZmZmIiBvcGFjaXR5PSIuMTgiIHRyYW5zZm9ybT0icm90YXRlKC0xMCA0MDAgMjI1KSIvPjxyZWN0IHg9IjIzNiIgeT0iMTIiIHdpZHRoPSI4MiIgaGVpZ2h0PSIyNCIgcng9IjEwIiBmaWxsPSIjZmZmIiBvcGFjaXR5PSIuMTgiIHRyYW5zZm9ybT0icm90YXRlKC0xNCA0MDAgMjI1KSIvPjxyZWN0IHg9IjEzOSIgeT0iMjYxIiB3aWR0aD0iMTI1IiBoZWlnaHQ9IjI1IiByeD0iMTAiIGZpbGw9IiNmZmYiIG9wYWNpdHk9Ii4xOCIgdHJhbnNmb3JtPSJyb3RhdGUoNyA0MDAgMjI1KSIvPjxyZWN0IHg9IjY5MCIgeT0iMjg2IiB3aWR0aD0iODMiIGhlaWdodD0iMjgiIHJ4PSIxMCIgZmlsbD0iI2ZmZiIgb3BhY2l0eT0iLjE4IiB0cmFuc2Zvcm09InJvdGF0ZSgyNSA0MDAgMjI1KSIvPjxyZWN0IHg9IjQyNCIgeT0iMzc2IiB3aWR0aD0iMTI3IiBoZWlnaHQ9IjM4IiByeD0iMTAiIGZpbGw9IiNmZmYiIG9wYWNpdHk9Ii4xOCIgdHJhbnNmb3JtPSJyb3RhdGUoLTIgNDAwIDIyNSkiLz48dGV4dCB4PSI0MDAiIHk9IjI5MCIgZm9udC1zaXplPSIxOTAiIHRleHQtYW5jaG9yPSJtaWRkbGUiPvCfjqg8L3RleHQ+PC9zdmc+",feat:false,name:"Intro to UI Design Workshop",cat:"Workshop",date:"2026-11-14T14:00",venue:"Seminar Hall 2",icon:"🎨",c:["#ff6b6b","#ffc933"],desc:"Learn layout, colour and typography by redesigning a real page in Figma.",long:"Bring a laptop. You will redesign a real landing page from scratch and leave with a portfolio-ready case study."},
+  {id:3,hero:true,img:"data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA4MDAgNDUwIj48ZGVmcz48bGluZWFyR3JhZGllbnQgaWQ9ImciIHgxPSIwIiB5MT0iMCIgeDI9IjEiIHkyPSIxIj48c3RvcCBvZmZzZXQ9IjAiIHN0b3AtY29sb3I9IiMwZjlkOGEiLz48c3RvcCBvZmZzZXQ9IjEiIHN0b3AtY29sb3I9IiM3YmUwYzMiLz48L2xpbmVhckdyYWRpZW50PjwvZGVmcz48cmVjdCB3aWR0aD0iODAwIiBoZWlnaHQ9IjQ1MCIgZmlsbD0idXJsKCNnKSIvPjxjaXJjbGUgY3g9IjI0MyIgY3k9IjMwMyIgcj0iNzMiIGZpbGw9IiNmZmYiIG9wYWNpdHk9IjAuMTIiLz48Y2lyY2xlIGN4PSI2MTgiIGN5PSIyNDIiIHI9IjU2IiBmaWxsPSIjZmZmIiBvcGFjaXR5PSIwLjE1Ii8+PGNpcmNsZSBjeD0iNDgwIiBjeT0iMTMyIiByPSI5OSIgZmlsbD0iI2ZmZiIgb3BhY2l0eT0iMC4wOSIvPjxjaXJjbGUgY3g9IjczNCIgY3k9IjI0MCIgcj0iMTYxIiBmaWxsPSIjZmZmIiBvcGFjaXR5PSIwLjEyIi8+PGNpcmNsZSBjeD0iMTU0IiBjeT0iMTE4IiByPSI3OCIgZmlsbD0iI2ZmZiIgb3BhY2l0eT0iMC4xOCIvPjxjaXJjbGUgY3g9IjUzNSIgY3k9IjE5OSIgcj0iNDMiIGZpbGw9IiNmZmYiIG9wYWNpdHk9IjAuMTYiLz48Y2lyY2xlIGN4PSI2NSIgY3k9IjgxIiByPSI1MCIgZmlsbD0iI2ZmZiIgb3BhY2l0eT0iMC4xMSIvPjxyZWN0IHg9IjMxIiB5PSIxMzciIHdpZHRoPSIxMjAiIGhlaWdodD0iMzMiIHJ4PSIxMCIgZmlsbD0iI2ZmZiIgb3BhY2l0eT0iLjE4IiB0cmFuc2Zvcm09InJvdGF0ZSgyMSA0MDAgMjI1KSIvPjxyZWN0IHg9IjM5NiIgeT0iMzY1IiB3aWR0aD0iMTYwIiBoZWlnaHQ9IjI3IiByeD0iMTAiIGZpbGw9IiNmZmYiIG9wYWNpdHk9Ii4xOCIgdHJhbnNmb3JtPSJyb3RhdGUoMCA0MDAgMjI1KSIvPjxyZWN0IHg9IjU5MCIgeT0iMjI3IiB3aWR0aD0iNzciIGhlaWdodD0iMjUiIHJ4PSIxMCIgZmlsbD0iI2ZmZiIgb3BhY2l0eT0iLjE4IiB0cmFuc2Zvcm09InJvdGF0ZSgtMTkgNDAwIDIyNSkiLz48cmVjdCB4PSIzNiIgeT0iNjkiIHdpZHRoPSIxMjMiIGhlaWdodD0iMjAiIHJ4PSIxMCIgZmlsbD0iI2ZmZiIgb3BhY2l0eT0iLjE4IiB0cmFuc2Zvcm09InJvdGF0ZSgtOSA0MDAgMjI1KSIvPjxyZWN0IHg9IjY4OCIgeT0iMjIzIiB3aWR0aD0iMTU5IiBoZWlnaHQ9IjM0IiByeD0iMTAiIGZpbGw9IiNmZmYiIG9wYWNpdHk9Ii4xOCIgdHJhbnNmb3JtPSJyb3RhdGUoLTYgNDAwIDIyNSkiLz48dGV4dCB4PSI0MDAiIHk9IjI5MCIgZm9udC1zaXplPSIxOTAiIHRleHQtYW5jaG9yPSJtaWRkbGUiPvCfjrg8L3RleHQ+PC9zdmc+",feat:true,name:"Winter Acoustic Night",cat:"Music",date:"2026-12-05T18:30",venue:"Open Air Amphitheatre",icon:"🎸",c:["#0f9d8a","#7be0c3"],desc:"Student bands and solo singers perform live in the open air.",long:"Doors open at 6 pm. Performances run until 10 pm. Bring a jacket, a friend and your favourite song requests."},
+  {id:4,img:"data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA4MDAgNDUwIj48ZGVmcz48bGluZWFyR3JhZGllbnQgaWQ9ImciIHgxPSIwIiB5MT0iMCIgeDI9IjEiIHkyPSIxIj48c3RvcCBvZmZzZXQ9IjAiIHN0b3AtY29sb3I9IiNmMjk5NGEiLz48c3RvcCBvZmZzZXQ9IjEiIHN0b3AtY29sb3I9IiNmZmQzN2EiLz48L2xpbmVhckdyYWRpZW50PjwvZGVmcz48cmVjdCB3aWR0aD0iODAwIiBoZWlnaHQ9IjQ1MCIgZmlsbD0idXJsKCNnKSIvPjxjaXJjbGUgY3g9IjI0MSIgY3k9IjE1NSIgcj0iNjYiIGZpbGw9IiNmZmYiIG9wYWNpdHk9IjAuMTYiLz48Y2lyY2xlIGN4PSI0OTAiIGN5PSI3OSIgcj0iNjMiIGZpbGw9IiNmZmYiIG9wYWNpdHk9IjAuMDgiLz48Y2lyY2xlIGN4PSI0MTEiIGN5PSIyODEiIHI9IjExNCIgZmlsbD0iI2ZmZiIgb3BhY2l0eT0iMC4xNyIvPjxjaXJjbGUgY3g9Ijc4MyIgY3k9IjMwIiByPSI5NiIgZmlsbD0iI2ZmZiIgb3BhY2l0eT0iMC4xNCIvPjxjaXJjbGUgY3g9IjM2OCIgY3k9IjE0MSIgcj0iODQiIGZpbGw9IiNmZmYiIG9wYWNpdHk9IjAuMTgiLz48Y2lyY2xlIGN4PSIyNjgiIGN5PSIxMDkiIHI9IjQ2IiBmaWxsPSIjZmZmIiBvcGFjaXR5PSIwLjE4Ii8+PGNpcmNsZSBjeD0iMjY2IiBjeT0iNDA5IiByPSIxMDkiIGZpbGw9IiNmZmYiIG9wYWNpdHk9IjAuMTAiLz48cmVjdCB4PSIzMTciIHk9IjE0OCIgd2lkdGg9IjE0MCIgaGVpZ2h0PSIzNyIgcng9IjEwIiBmaWxsPSIjZmZmIiBvcGFjaXR5PSIuMTgiIHRyYW5zZm9ybT0icm90YXRlKC0yIDQwMCAyMjUpIi8+PHJlY3QgeD0iODgiIHk9IjMxMCIgd2lkdGg9IjEwMyIgaGVpZ2h0PSIzNSIgcng9IjEwIiBmaWxsPSIjZmZmIiBvcGFjaXR5PSIuMTgiIHRyYW5zZm9ybT0icm90YXRlKC0xIDQwMCAyMjUpIi8+PHJlY3QgeD0iNTE4IiB5PSIxMjciIHdpZHRoPSI4MiIgaGVpZ2h0PSIyMSIgcng9IjEwIiBmaWxsPSIjZmZmIiBvcGFjaXR5PSIuMTgiIHRyYW5zZm9ybT0icm90YXRlKDUgNDAwIDIyNSkiLz48cmVjdCB4PSIyODYiIHk9IjQ1IiB3aWR0aD0iMTMwIiBoZWlnaHQ9IjQwIiByeD0iMTAiIGZpbGw9IiNmZmYiIG9wYWNpdHk9Ii4xOCIgdHJhbnNmb3JtPSJyb3RhdGUoLTYgNDAwIDIyNSkiLz48cmVjdCB4PSI3IiB5PSIxNDkiIHdpZHRoPSIxMzMiIGhlaWdodD0iMzYiIHJ4PSIxMCIgZmlsbD0iI2ZmZiIgb3BhY2l0eT0iLjE4IiB0cmFuc2Zvcm09InJvdGF0ZSgtNiA0MDAgMjI1KSIvPjx0ZXh0IHg9IjQwMCIgeT0iMjkwIiBmb250LXNpemU9IjE5MCIgdGV4dC1hbmNob3I9Im1pZGRsZSI+8J+agDwvdGV4dD48L3N2Zz4=",feat:true,name:"Startup Founders Talk",cat:"Talks",date:"2026-11-28T11:00",venue:"Main Auditorium",icon:"🚀",c:["#f2994a","#ffd37a"],desc:"Three young founders talk about early mistakes and what they learned.",long:"A 90-minute panel followed by open Q&A and networking. Great for anyone thinking about starting something."},
+  {id:5,img:"data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA4MDAgNDUwIj48ZGVmcz48bGluZWFyR3JhZGllbnQgaWQ9ImciIHgxPSIwIiB5MT0iMCIgeDI9IjEiIHkyPSIxIj48c3RvcCBvZmZzZXQ9IjAiIHN0b3AtY29sb3I9IiM2YTRjZmYiLz48c3RvcCBvZmZzZXQ9IjEiIHN0b3AtY29sb3I9IiNjNWI4ZmYiLz48L2xpbmVhckdyYWRpZW50PjwvZGVmcz48cmVjdCB3aWR0aD0iODAwIiBoZWlnaHQ9IjQ1MCIgZmlsbD0idXJsKCNnKSIvPjxjaXJjbGUgY3g9IjYzNyIgY3k9IjEzMCIgcj0iMTMxIiBmaWxsPSIjZmZmIiBvcGFjaXR5PSIwLjE3Ii8+PGNpcmNsZSBjeD0iNzU3IiBjeT0iMzMzIiByPSI0NyIgZmlsbD0iI2ZmZiIgb3BhY2l0eT0iMC4xOCIvPjxjaXJjbGUgY3g9Ijc5NCIgY3k9IjEyNyIgcj0iNTMiIGZpbGw9IiNmZmYiIG9wYWNpdHk9IjAuMTkiLz48Y2lyY2xlIGN4PSIxMTUiIGN5PSIxOTAiIHI9IjE2MCIgZmlsbD0iI2ZmZiIgb3BhY2l0eT0iMC4xOCIvPjxjaXJjbGUgY3g9IjM4OSIgY3k9IjI3OCIgcj0iNjYiIGZpbGw9IiNmZmYiIG9wYWNpdHk9IjAuMTQiLz48Y2lyY2xlIGN4PSIxMyIgY3k9IjM3NCIgcj0iOTUiIGZpbGw9IiNmZmYiIG9wYWNpdHk9IjAuMTIiLz48Y2lyY2xlIGN4PSIxODYiIGN5PSI0NDQiIHI9IjEzOSIgZmlsbD0iI2ZmZiIgb3BhY2l0eT0iMC4wOSIvPjxyZWN0IHg9IjczIiB5PSI3MSIgd2lkdGg9IjEzOSIgaGVpZ2h0PSIzMyIgcng9IjEwIiBmaWxsPSIjZmZmIiBvcGFjaXR5PSIuMTgiIHRyYW5zZm9ybT0icm90YXRlKDMgNDAwIDIyNSkiLz48cmVjdCB4PSIxMjkiIHk9IjY3IiB3aWR0aD0iNjAiIGhlaWdodD0iMTQiIHJ4PSIxMCIgZmlsbD0iI2ZmZiIgb3BhY2l0eT0iLjE4IiB0cmFuc2Zvcm09InJvdGF0ZSgtMTIgNDAwIDIyNSkiLz48cmVjdCB4PSIyMjAiIHk9Ijg0IiB3aWR0aD0iODEiIGhlaWdodD0iMjMiIHJ4PSIxMCIgZmlsbD0iI2ZmZiIgb3BhY2l0eT0iLjE4IiB0cmFuc2Zvcm09InJvdGF0ZSgtNSA0MDAgMjI1KSIvPjxyZWN0IHg9IjIwMyIgeT0iMjc2IiB3aWR0aD0iMTQ2IiBoZWlnaHQ9IjM0IiByeD0iMTAiIGZpbGw9IiNmZmYiIG9wYWNpdHk9Ii4xOCIgdHJhbnNmb3JtPSJyb3RhdGUoLTEyIDQwMCAyMjUpIi8+PHJlY3QgeD0iMTg2IiB5PSIzNTMiIHdpZHRoPSI4NSIgaGVpZ2h0PSIyNiIgcng9IjEwIiBmaWxsPSIjZmZmIiBvcGFjaXR5PSIuMTgiIHRyYW5zZm9ybT0icm90YXRlKC02IDQwMCAyMjUpIi8+PHRleHQgeD0iNDAwIiB5PSIyOTAiIGZvbnQtc2l6ZT0iMTkwIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIj7wn6egPC90ZXh0Pjwvc3ZnPg==",feat:false,name:"Inter-College Quiz League",cat:"Competition",date:"2026-12-12T10:00",venue:"Library Conference Room",icon:"🧠",c:["#6a4cff","#c5b8ff"],desc:"General knowledge, science and pop culture rounds in teams of three.",long:"Preliminary written round followed by a buzzer final on stage. Certificates for all finalists."},
+  {id:6,img:"data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA4MDAgNDUwIj48ZGVmcz48bGluZWFyR3JhZGllbnQgaWQ9ImciIHgxPSIwIiB5MT0iMCIgeDI9IjEiIHkyPSIxIj48c3RvcCBvZmZzZXQ9IjAiIHN0b3AtY29sb3I9IiMzYTg2ZmYiLz48c3RvcCBvZmZzZXQ9IjEiIHN0b3AtY29sb3I9IiM5YWQwZmYiLz48L2xpbmVhckdyYWRpZW50PjwvZGVmcz48cmVjdCB3aWR0aD0iODAwIiBoZWlnaHQ9IjQ1MCIgZmlsbD0idXJsKCNnKSIvPjxjaXJjbGUgY3g9IjU4NyIgY3k9IjQyMCIgcj0iNjAiIGZpbGw9IiNmZmYiIG9wYWNpdHk9IjAuMTMiLz48Y2lyY2xlIGN4PSIyNjciIGN5PSIxOCIgcj0iNDAiIGZpbGw9IiNmZmYiIG9wYWNpdHk9IjAuMDkiLz48Y2lyY2xlIGN4PSI2MDAiIGN5PSIyNDAiIHI9IjEzNSIgZmlsbD0iI2ZmZiIgb3BhY2l0eT0iMC4xMSIvPjxjaXJjbGUgY3g9IjIyIiBjeT0iMTM5IiByPSIxNjUiIGZpbGw9IiNmZmYiIG9wYWNpdHk9IjAuMTciLz48Y2lyY2xlIGN4PSI3NDciIGN5PSI0NDYiIHI9IjE0NSIgZmlsbD0iI2ZmZiIgb3BhY2l0eT0iMC4xOSIvPjxjaXJjbGUgY3g9IjU1MiIgY3k9IjM0OSIgcj0iNjQiIGZpbGw9IiNmZmYiIG9wYWNpdHk9IjAuMTAiLz48Y2lyY2xlIGN4PSI1NjYiIGN5PSIzNTgiIHI9IjEwNyIgZmlsbD0iI2ZmZiIgb3BhY2l0eT0iMC4xNiIvPjxyZWN0IHg9IjYyNCIgeT0iMzUxIiB3aWR0aD0iNzEiIGhlaWdodD0iMjciIHJ4PSIxMCIgZmlsbD0iI2ZmZiIgb3BhY2l0eT0iLjE4IiB0cmFuc2Zvcm09InJvdGF0ZSgtNCA0MDAgMjI1KSIvPjxyZWN0IHg9Ijk1IiB5PSIxODUiIHdpZHRoPSIxMTIiIGhlaWdodD0iMzkiIHJ4PSIxMCIgZmlsbD0iI2ZmZiIgb3BhY2l0eT0iLjE4IiB0cmFuc2Zvcm09InJvdGF0ZSgtOSA0MDAgMjI1KSIvPjxyZWN0IHg9IjQ1NSIgeT0iMzU4IiB3aWR0aD0iNzIiIGhlaWdodD0iMzgiIHJ4PSIxMCIgZmlsbD0iI2ZmZiIgb3BhY2l0eT0iLjE4IiB0cmFuc2Zvcm09InJvdGF0ZSgtMTMgNDAwIDIyNSkiLz48cmVjdCB4PSI2NTAiIHk9IjE0OSIgd2lkdGg9IjcyIiBoZWlnaHQ9IjE1IiByeD0iMTAiIGZpbGw9IiNmZmYiIG9wYWNpdHk9Ii4xOCIgdHJhbnNmb3JtPSJyb3RhdGUoMTIgNDAwIDIyNSkiLz48cmVjdCB4PSIyMDUiIHk9IjMzNSIgd2lkdGg9IjEwNiIgaGVpZ2h0PSIyOSIgcng9IjEwIiBmaWxsPSIjZmZmIiBvcGFjaXR5PSIuMTgiIHRyYW5zZm9ybT0icm90YXRlKC0xMyA0MDAgMjI1KSIvPjx0ZXh0IHg9IjQwMCIgeT0iMjkwIiBmb250LXNpemU9IjE5MCIgdGV4dC1hbmNob3I9Im1pZGRsZSI+8J+TtzwvdGV4dD48L3N2Zz4=",feat:false,name:"Photography Walk: Old Town",cat:"Workshop",date:"2026-11-09T06:30",venue:"Meet at Main Gate",icon:"📷",c:["#3a86ff","#9ad0ff"],desc:"Golden-hour street photography with a professional guide.",long:"A relaxed two-hour walk covering composition, light and candid portraits. Phone cameras are welcome."},
+  {id:7,img:"data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA4MDAgNDUwIj48ZGVmcz48bGluZWFyR3JhZGllbnQgaWQ9ImciIHgxPSIwIiB5MT0iMCIgeDI9IjEiIHkyPSIxIj48c3RvcCBvZmZzZXQ9IjAiIHN0b3AtY29sb3I9IiNlNTM4OWIiLz48c3RvcCBvZmZzZXQ9IjEiIHN0b3AtY29sb3I9IiNmZmEwZDIiLz48L2xpbmVhckdyYWRpZW50PjwvZGVmcz48cmVjdCB3aWR0aD0iODAwIiBoZWlnaHQ9IjQ1MCIgZmlsbD0idXJsKCNnKSIvPjxjaXJjbGUgY3g9IjMzMSIgY3k9Ijc3IiByPSIxNDEiIGZpbGw9IiNmZmYiIG9wYWNpdHk9IjAuMTUiLz48Y2lyY2xlIGN4PSI3NCIgY3k9IjQyMCIgcj0iNjQiIGZpbGw9IiNmZmYiIG9wYWNpdHk9IjAuMTIiLz48Y2lyY2xlIGN4PSI1OSIgY3k9IjI1OSIgcj0iOTQiIGZpbGw9IiNmZmYiIG9wYWNpdHk9IjAuMDciLz48Y2lyY2xlIGN4PSI0NDQiIGN5PSIyMTQiIHI9IjU3IiBmaWxsPSIjZmZmIiBvcGFjaXR5PSIwLjEwIi8+PGNpcmNsZSBjeD0iNTY0IiBjeT0iMjE3IiByPSI1NSIgZmlsbD0iI2ZmZiIgb3BhY2l0eT0iMC4xOCIvPjxjaXJjbGUgY3g9IjEyNiIgY3k9IjExNCIgcj0iNTUiIGZpbGw9IiNmZmYiIG9wYWNpdHk9IjAuMTUiLz48Y2lyY2xlIGN4PSI0MDYiIGN5PSIyNSIgcj0iOTYiIGZpbGw9IiNmZmYiIG9wYWNpdHk9IjAuMDgiLz48cmVjdCB4PSIxMzYiIHk9IjE0OCIgd2lkdGg9IjExMyIgaGVpZ2h0PSIxOCIgcng9IjEwIiBmaWxsPSIjZmZmIiBvcGFjaXR5PSIuMTgiIHRyYW5zZm9ybT0icm90YXRlKDkgNDAwIDIyNSkiLz48cmVjdCB4PSIxMjAiIHk9IjI5MiIgd2lkdGg9Ijk5IiBoZWlnaHQ9IjMxIiByeD0iMTAiIGZpbGw9IiNmZmYiIG9wYWNpdHk9Ii4xOCIgdHJhbnNmb3JtPSJyb3RhdGUoMTggNDAwIDIyNSkiLz48cmVjdCB4PSIxODUiIHk9IjUyIiB3aWR0aD0iMTM0IiBoZWlnaHQ9IjMyIiByeD0iMTAiIGZpbGw9IiNmZmYiIG9wYWNpdHk9Ii4xOCIgdHJhbnNmb3JtPSJyb3RhdGUoMTUgNDAwIDIyNSkiLz48cmVjdCB4PSIxOTIiIHk9IjE5MCIgd2lkdGg9IjcyIiBoZWlnaHQ9IjMxIiByeD0iMTAiIGZpbGw9IiNmZmYiIG9wYWNpdHk9Ii4xOCIgdHJhbnNmb3JtPSJyb3RhdGUoMjAgNDAwIDIyNSkiLz48cmVjdCB4PSI2NCIgeT0iMjg4IiB3aWR0aD0iNjciIGhlaWdodD0iMzMiIHJ4PSIxMCIgZmlsbD0iI2ZmZiIgb3BhY2l0eT0iLjE4IiB0cmFuc2Zvcm09InJvdGF0ZSgtMTIgNDAwIDIyNSkiLz48dGV4dCB4PSI0MDAiIHk9IjI5MCIgZm9udC1zaXplPSIxOTAiIHRleHQtYW5jaG9yPSJtaWRkbGUiPvCfpJY8L3RleHQ+PC9zdmc+",feat:false,name:"AI in Everyday Life",cat:"Talks",date:"2026-12-18T15:00",venue:"Room 301, CS Block",icon:"🤖",c:["#e5389b","#ffa0d2"],desc:"A beginner-friendly talk on how AI tools are used in study and work.",long:"Live demos, honest limits and a Q&A. No technical background needed."},
+  {id:8,img:"data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA4MDAgNDUwIj48ZGVmcz48bGluZWFyR3JhZGllbnQgaWQ9ImciIHgxPSIwIiB5MT0iMCIgeDI9IjEiIHkyPSIxIj48c3RvcCBvZmZzZXQ9IjAiIHN0b3AtY29sb3I9IiNkNjI4MzkiLz48c3RvcCBvZmZzZXQ9IjEiIHN0b3AtY29sb3I9IiNmZjlhYTIiLz48L2xpbmVhckdyYWRpZW50PjwvZGVmcz48cmVjdCB3aWR0aD0iODAwIiBoZWlnaHQ9IjQ1MCIgZmlsbD0idXJsKCNnKSIvPjxjaXJjbGUgY3g9IjIzMiIgY3k9IjE4OSIgcj0iMTM2IiBmaWxsPSIjZmZmIiBvcGFjaXR5PSIwLjA5Ii8+PGNpcmNsZSBjeD0iNzIxIiBjeT0iMjIiIHI9IjYxIiBmaWxsPSIjZmZmIiBvcGFjaXR5PSIwLjA5Ii8+PGNpcmNsZSBjeD0iNTE4IiBjeT0iMTA3IiByPSIxNDIiIGZpbGw9IiNmZmYiIG9wYWNpdHk9IjAuMTUiLz48Y2lyY2xlIGN4PSI0NzAiIGN5PSIyNDkiIHI9IjE1NiIgZmlsbD0iI2ZmZiIgb3BhY2l0eT0iMC4xMiIvPjxjaXJjbGUgY3g9IjU4NiIgY3k9Ijk4IiByPSIxNDMiIGZpbGw9IiNmZmYiIG9wYWNpdHk9IjAuMDgiLz48Y2lyY2xlIGN4PSIyMzkiIGN5PSIzODgiIHI9IjQ1IiBmaWxsPSIjZmZmIiBvcGFjaXR5PSIwLjE2Ii8+PGNpcmNsZSBjeD0iNTMyIiBjeT0iMjA4IiByPSIxNjEiIGZpbGw9IiNmZmYiIG9wYWNpdHk9IjAuMTkiLz48cmVjdCB4PSIzODgiIHk9IjM3MSIgd2lkdGg9Ijc0IiBoZWlnaHQ9IjM1IiByeD0iMTAiIGZpbGw9IiNmZmYiIG9wYWNpdHk9Ii4xOCIgdHJhbnNmb3JtPSJyb3RhdGUoLTkgNDAwIDIyNSkiLz48cmVjdCB4PSI5OSIgeT0iMzIiIHdpZHRoPSIxMDkiIGhlaWdodD0iMzMiIHJ4PSIxMCIgZmlsbD0iI2ZmZiIgb3BhY2l0eT0iLjE4IiB0cmFuc2Zvcm09InJvdGF0ZSgtMSA0MDAgMjI1KSIvPjxyZWN0IHg9IjExMCIgeT0iMzM4IiB3aWR0aD0iNjciIGhlaWdodD0iMjQiIHJ4PSIxMCIgZmlsbD0iI2ZmZiIgb3BhY2l0eT0iLjE4IiB0cmFuc2Zvcm09InJvdGF0ZSgtMTAgNDAwIDIyNSkiLz48cmVjdCB4PSI4OCIgeT0iMjU0IiB3aWR0aD0iMTQzIiBoZWlnaHQ9IjMwIiByeD0iMTAiIGZpbGw9IiNmZmYiIG9wYWNpdHk9Ii4xOCIgdHJhbnNmb3JtPSJyb3RhdGUoLTEyIDQwMCAyMjUpIi8+PHJlY3QgeD0iNTk1IiB5PSI3MiIgd2lkdGg9IjEzNyIgaGVpZ2h0PSIxNiIgcng9IjEwIiBmaWxsPSIjZmZmIiBvcGFjaXR5PSIuMTgiIHRyYW5zZm9ybT0icm90YXRlKDkgNDAwIDIyNSkiLz48dGV4dCB4PSI0MDAiIHk9IjI5MCIgZm9udC1zaXplPSIxOTAiIHRleHQtYW5jaG9yPSJtaWRkbGUiPvCfkoM8L3RleHQ+PC9zdmc+",feat:false,name:"Cultural Fest Dance Battle",cat:"Competition",date:"2027-01-10T17:00",venue:"Sports Complex Stage",icon:"💃",c:["#d62839","#ff9aa2"],desc:"Solo and crew categories across freestyle and choreographed rounds.",long:"Judged on technique, energy and stage presence. Register as a participant or come to cheer."}
+];
+const $ = s => document.querySelector(s);
+const KEY = "eventify-regs";
+let cat = "All", term = "", current = null;
+
+// ---------- Helpers ----------
+const load = () => { try { return JSON.parse(localStorage.getItem(KEY)) || []; } catch { return []; } };
+const save = v => { try { localStorage.setItem(KEY, JSON.stringify(v)); } catch {} };
+const fmt = d => new Date(d).toLocaleString("en-IN",{weekday:"short",day:"numeric",month:"short",hour:"numeric",minute:"2-digit"});
+const art = e => `<div class="art" style="background:linear-gradient(135deg,${e.c[0]},${e.c[1]})"><span class="fb">${e.icon}</span><img src="${e.img}" alt="${e.name} illustration" loading="lazy" onerror="this.remove()"><em>${e.cat}</em>${e.feat?'<em class="star">★ Featured</em>':''}</div>`;
+const upcoming = () => EVENTS.filter(e => new Date(e.date) > new Date()).sort((a,b) => new Date(a.date)-new Date(b.date));
+
+// ---------- Event grid ----------
+function renderChips(){
+  const cats = ["All",...new Set(EVENTS.map(e => e.cat))];
+  $("#chips").innerHTML = cats.map(c => `<button class="chip" aria-pressed="${c===cat}" data-c="${c}">${c}</button>`).join("");
+}
+function cardHTML(e){return `<button class="card" data-id="${e.id}">${art(e)}<div class="body"><span class="meta">📅 ${fmt(e.date)}</span><span class="cd" data-d="${e.date}"></span><h3>${e.name}</h3><p class="venue">📍 ${e.venue}</p><p>${e.desc}</p></div></button>`;}
+function renderFeatured(){$("#fgrid").innerHTML = upcoming().filter(e => e.feat).slice(0,3).map(cardHTML).join("");}
+function cardTimers(){document.querySelectorAll(".cd").forEach(el=>{let s=Math.max(0,Math.floor((new Date(el.dataset.d)-new Date())/1000));const d=Math.floor(s/86400),h=Math.floor(s%86400/3600),m=Math.floor(s%3600/60);el.textContent="⏳ Starts in "+(d?d+"d ":"")+h+"h "+m+"m";});}
+function renderGrid(){
+  const list = upcoming().filter(e => (cat==="All"||e.cat===cat) && (e.name+e.venue+e.desc+e.cat).toLowerCase().includes(term));
+  $("#grid").innerHTML = list.map(cardHTML).join(""); cardTimers();
+  $("#empty").hidden = list.length > 0;
+}
+$("#chips").onclick = e => { const c = e.target.dataset.c; if(c){cat=c;renderChips();renderGrid();} };
+$("#search").oninput = e => { term = e.target.value.trim().toLowerCase(); renderGrid(); };
+document.addEventListener("click", e => { const c = e.target.closest(".card"); if(c) openEvent(+c.dataset.id); });
+
+// ---------- Hero countdown ----------
+function tick(){
+  cardTimers();
+  const n = upcoming().find(e => e.hero) || upcoming()[0]; if(!n) return;
+  $("#nextName").textContent = n.name;
+  $("#nextMeta").textContent = fmt(n.date)+" · "+n.venue;
+  $("#nextBtn").onclick = () => openEvent(n.id);
+  let s = Math.max(0,Math.floor((new Date(n.date)-new Date())/1000));
+  const p = [["days",86400],["hrs",3600],["min",60],["sec",1]].map(([l,v]) => { const x=Math.floor(s/v); s%=v; return `<div>${String(x).padStart(2,"0")}<small>${l}</small></div>`; });
+  $("#clock").innerHTML = p.join("");
+}
+tick(); setInterval(tick,1000);
+
+// ---------- Modal + form ----------
+const modal = $("#modal"), form = $("#form");
+function openEvent(id){
+  current = EVENTS.find(e => e.id===id);
+  $("#detail").innerHTML = `${art(current)}<div class="body"><h2>${current.name}</h2><ul><li>📅 ${fmt(current.date)}</li><li>📍 ${current.venue}</li></ul><p>${current.long}</p></div>`;
+  form.elements.event.innerHTML = upcoming().map(e => `<option value="${e.id}" ${e.id===id?"selected":""}>${e.name}</option>`).join("");
+  form.reset(); form.elements.event.value = id; clearErrors();
+  form.hidden = false; $("#done").hidden = true;
+  modal.showModal();
+}
+$("#close").onclick = () => modal.close();
+modal.onclick = e => { if(e.target===modal) modal.close(); };
+form.elements.event.onchange = e => openEvent(+e.target.value);
+
+function clearErrors(){ form.querySelectorAll("small").forEach(s => s.textContent=""); form.querySelectorAll(".bad").forEach(i => i.classList.remove("bad")); }
+function validate(){
+  const f = form.elements, v = {name:f.name.value.trim(),email:f.email.value.trim(),phone:f.phone.value.replace(/[\s-]/g,""),event:f.event.value};
+  const err = {};
+  if(!/^[A-Za-z][A-Za-z .'-]{1,49}$/.test(v.name)) err.name = "Enter your full name using letters only (2–50 characters).";
+  if(!/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(v.email)) err.email = "Enter a valid email, like name@example.com.";
+  if(!/^(\+91)?[6-9]\d{9}$/.test(v.phone)) err.phone = "Enter a 10-digit mobile number starting with 6–9.";
+  if(!v.event) err.event = "Choose an event.";
+  else if(load().some(r => r.eventId==v.event && r.email.toLowerCase()===v.email.toLowerCase())) err.email = "This email is already registered for the event.";
+  return {v,err};
+}
+form.onsubmit = e => {
+  e.preventDefault(); clearErrors();
+  const {v,err} = validate();
+  Object.entries(err).forEach(([k,m]) => { form.elements[k].classList.add("bad"); form.elements[k].parentElement.querySelector("small").textContent = m; });
+  if(Object.keys(err).length){ form.querySelector(".bad").focus(); return; }
+  const ev = EVENTS.find(x => x.id==v.event);
+  save([...load(),{id:Date.now(),eventId:ev.id,name:v.name,email:v.email,phone:v.phone}]);
+  form.hidden = true; $("#done").hidden = false;
+  $("#done").innerHTML = `<div class="tick">✓</div><h3>You’re registered, ${v.name.split(" ")[0]}!</h3><p class="muted">${ev.name}<br>${fmt(ev.date)} · ${ev.venue}<br>A confirmation will be sent to ${v.email}.</p><button class="btn" onclick="modal.close()">Done</button>`;
+  renderRegs();
+};
+
+// ---------- My registrations ----------
+function renderRegs(){
+  const r = load();
+  $("#count").textContent = r.length;
+  $("#regs").innerHTML = r.map(x => { const e = EVENTS.find(y => y.id===x.eventId); return `<li><span><b>${e.name}</b><br><span class="muted">${x.name} · ${x.email} · ${fmt(e.date)}</span></span><button data-id="${x.id}">Cancel</button></li>`; }).join("");
+}
+$("#regs").onclick = e => { const id = e.target.dataset.id; if(id){ save(load().filter(r => r.id!=id)); renderRegs(); } };
+
+// ---------- Theme ----------
+const root = document.documentElement;
+let saved = null; try { saved = localStorage.getItem("eventify-theme"); } catch {}
+root.dataset.theme = saved || (matchMedia("(prefers-color-scheme:dark)").matches ? "dark" : "light");
+$("#theme").onclick = () => { root.dataset.theme = root.dataset.theme==="dark" ? "light" : "dark"; try{localStorage.setItem("eventify-theme",root.dataset.theme);}catch{} };
+
+renderChips(); renderFeatured(); renderGrid(); renderRegs(); cardTimers();
+
+</script>
 </body>
 </html>
