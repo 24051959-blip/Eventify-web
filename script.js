@@ -2,7 +2,7 @@
 const EVENTS = [
   {id:1,img:"images/event-1.svg",feat:true,name:"CodeSprint 24h Hackathon",cat:"Tech",date:"2026-11-21T09:00",venue:"Innovation Lab, Block C",icon:"💻",c:["#4a3ee0","#8f86ff"],desc:"Team up, pick a problem and build a working prototype overnight.",long:"Teams of up to four choose a problem statement on the morning of the event, build through the night and present to a panel of mentors. Meals are provided and the top three teams win prizes."},
   {id:2,img:"images/event-2.svg",feat:false,name:"Intro to UI Design Workshop",cat:"Workshop",date:"2026-11-14T14:00",venue:"Seminar Hall 2",icon:"🎨",c:["#ff6b6b","#ffc933"],desc:"Learn layout, colour and typography by redesigning a real page in Figma.",long:"Bring a laptop. You will redesign a real landing page from scratch and leave with a portfolio-ready case study."},
-  {id:3,img:"images/event-3.svg",feat:true,name:"Winter Acoustic Night",cat:"Music",date:"2026-12-05T18:30",venue:"Open Air Amphitheatre",icon:"🎸",c:["#0f9d8a","#7be0c3"],desc:"Student bands and solo singers perform live in the open air.",long:"Doors open at 6 pm. Performances run until 10 pm. Bring a jacket, a friend and your favourite song requests."},
+  {id:3,hero:true,img:"images/event-3.svg",feat:true,name:"Winter Acoustic Night",cat:"Music",date:"2026-12-05T18:30",venue:"Open Air Amphitheatre",icon:"🎸",c:["#0f9d8a","#7be0c3"],desc:"Student bands and solo singers perform live in the open air.",long:"Doors open at 6 pm. Performances run until 10 pm. Bring a jacket, a friend and your favourite song requests."},
   {id:4,img:"images/event-4.svg",feat:true,name:"Startup Founders Talk",cat:"Talks",date:"2026-11-28T11:00",venue:"Main Auditorium",icon:"🚀",c:["#f2994a","#ffd37a"],desc:"Three young founders talk about early mistakes and what they learned.",long:"A 90-minute panel followed by open Q&A and networking. Great for anyone thinking about starting something."},
   {id:5,img:"images/event-5.svg",feat:false,name:"Inter-College Quiz League",cat:"Competition",date:"2026-12-12T10:00",venue:"Library Conference Room",icon:"🧠",c:["#6a4cff","#c5b8ff"],desc:"General knowledge, science and pop culture rounds in teams of three.",long:"Preliminary written round followed by a buzzer final on stage. Certificates for all finalists."},
   {id:6,img:"images/event-6.svg",feat:false,name:"Photography Walk: Old Town",cat:"Workshop",date:"2026-11-09T06:30",venue:"Meet at Main Gate",icon:"📷",c:["#3a86ff","#9ad0ff"],desc:"Golden-hour street photography with a professional guide.",long:"A relaxed two-hour walk covering composition, light and candid portraits. Phone cameras are welcome."},
@@ -40,7 +40,7 @@ document.addEventListener("click", e => { const c = e.target.closest(".card"); i
 // ---------- Hero countdown ----------
 function tick(){
   cardTimers();
-  const n = upcoming()[0]; if(!n) return;
+  const n = upcoming().find(e => e.hero) || upcoming()[0]; if(!n) return;
   $("#nextName").textContent = n.name;
   $("#nextMeta").textContent = fmt(n.date)+" · "+n.venue;
   $("#nextBtn").onclick = () => openEvent(n.id);
