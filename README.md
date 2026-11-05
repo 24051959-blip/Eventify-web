@@ -4,7 +4,7 @@ A modern, responsive event management website where users can explore upcoming e
 
 - **Live website:** https://24051959-blip.github.io/Eventify-web/
 - **Author:** SHIVANSH NAYAK
-- **GitHub repository:** 
+- **GitHub repository:** https://github.com/24051959-blip/Eventify-web
 
 ## Features
 
